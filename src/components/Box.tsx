@@ -5,6 +5,7 @@ import { AriaProps } from "../types/ariaProps";
 import { CursorProps } from "../types/cursorProps";
 import useStyledSystem from "../core/useStyledSystem";
 import { cx } from "@emotion/css";
+import { extractAllAdjacentProps } from "../types/util";
 
 interface BoxProps extends BaseProps, AllStylesProps, AriaProps, CursorProps {
   as?:
@@ -30,53 +31,26 @@ interface BoxProps extends BaseProps, AllStylesProps, AriaProps, CursorProps {
   children?: React.ReactNode | string;
 }
 
-const Box = (props: BoxProps) => {
-  const {
-    as: Component = "div",
-    id,
-    children,
-    className,
-    style,
-    tabIndex,
-    role,
-    onClick,
-    onMouseEnter,
-    onMouseLeave,
-    "aria-label": ariaLabel,
-    "aria-labelledby": ariaLabelledBy,
-    "aria-describedby": ariaDescribedBy,
-    "aria-controls": ariaControls,
-    "aria-expanded": ariaExpanded,
-    "aria-haspopup": ariaHasPopup,
-    "aria-hidden": ariaHidden,
-    "aria-live": ariaLive,
-    ...styleProps
-  } = props;
+const Box: React.FC<BoxProps> = (props: BoxProps) => {
+  const { base, aria, cursor, rest } = extractAllAdjacentProps(props);
+  const { as: Component = "div", children, ...styleProps } = rest;
 
   const classNameForStyleProps = useStyledSystem<AllStylesProps>(styleProps);
 
   return (
     <Component
-      id={id}
-      className={cx(classNameForStyleProps, className)}
-      style={style}
-      tabIndex={tabIndex}
-      role={role}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      onClick={onClick}
-      aria-label={ariaLabel}
-      aria-labelledby={ariaLabelledBy}
-      aria-describedby={ariaDescribedBy}
-      aria-controls={ariaControls}
-      aria-expanded={ariaExpanded}
-      aria-haspopup={ariaHasPopup}
-      aria-hidden={ariaHidden}
-      aria-live={ariaLive}
+      {...aria}
+      {...cursor}
+      {...base}
+      className={cx(classNameForStyleProps, base.className)}
     >
       {children}
     </Component>
   );
+};
+
+Box.defaultProps = {
+  borderRadius: "default",
 };
 
 export default Box;
