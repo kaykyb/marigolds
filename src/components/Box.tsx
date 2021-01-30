@@ -6,8 +6,13 @@ import { CursorProps } from "../types/cursorProps";
 import useStyledSystem from "../core/useStyledSystem";
 import { cx } from "@emotion/css";
 import { extractAllAdjacentProps } from "../types/util";
+import Emoji from "./Emoji";
 
-interface BoxProps extends BaseProps, AllStylesProps, AriaProps, CursorProps {
+export interface BoxProps
+  extends BaseProps,
+    AllStylesProps,
+    AriaProps,
+    CursorProps {
   as?:
     | "div"
     | "span"

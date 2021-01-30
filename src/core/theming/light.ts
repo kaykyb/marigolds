@@ -1,19 +1,26 @@
 import { buildTheme } from "./default";
 import { ThemeColorsType } from "./types";
-import { hsl } from "./util";
 
 const lightColors: ThemeColorsType = {
-  baseHigh: hsl(0, 0, 100),
-  baseMedium: hsl(0, 0, 90),
-  baseLow: hsl(0, 0, 80),
+  // Base palette
+  base: "#ffffff",
 
-  baseText: hsl(0, 0, 0),
+  baseHigh: "#e6e6e6",
+  baseMediumHigh: "#cccccc",
+  baseMediumLow: "#999999",
+  baseLow: "#666666",
 
-  accentHigh: hsl(231, 84, 63),
-  accentMedium: hsl(231, 84, 42),
-  accentLow: hsl(231, 84, 29),
+  baseText: "#000000",
 
-  accentText: hsl(0, 0, 100),
+  // Accent palette
+  accent: "#2949FF",
+
+  accentHigh: "#2440E0",
+  accentMediumHigh: "#1A2EA1",
+  accentMediumLow: "#111F6B",
+  accentLow: "#0C154A",
+
+  accentText: "#ffffff",
 };
 
 export const LIGHT_THEME = buildTheme(lightColors);

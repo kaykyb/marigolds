@@ -1,14 +1,22 @@
 import { CSSInterpolation } from "@emotion/css";
 
 export type ThemeColorsType = {
+  // Base palette
+  base: string;
+
   baseHigh: string;
-  baseMedium: string;
+  baseMediumHigh: string;
+  baseMediumLow: string;
   baseLow: string;
 
   baseText: string;
 
+  // Accent palette
+  accent: string;
+
   accentHigh: string;
-  accentMedium: string;
+  accentMediumHigh: string;
+  accentMediumLow: string;
   accentLow: string;
 
   accentText: string;
@@ -54,6 +62,11 @@ export type ThemeSizeVariantType = {
   large: CSSInterpolation;
 };
 
+export type ThemeButtonVariantType = {
+  default: CSSInterpolation;
+  primary: CSSInterpolation;
+};
+
 export type AgnosticThemeType = {
   space: ThemeSpaceType;
   breakpoints: ThemeBreakpointsType;
@@ -64,6 +77,8 @@ export type AgnosticThemeType = {
   borders: ThemeBordersType;
   radii: ThemeRadiiType;
   buttonSizes: ThemeSizeVariantType;
+  buttonVariants: ThemeButtonVariantType;
+  textBoxSizes: ThemeSizeVariantType;
 };
 
 export type ColorThemeType = {

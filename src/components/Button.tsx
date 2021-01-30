@@ -4,12 +4,13 @@ import { allStylesParser, AllStylesProps } from "../types/allStylesProps";
 import { AriaProps } from "../types/ariaProps";
 import { CursorProps } from "../types/cursorProps";
 import useStyledSystem from "../core/useStyledSystem";
-import { cx } from "@emotion/css";
+import { css, cx } from "@emotion/css";
 import { extractAllAdjacentProps } from "../types/util";
 import { compose, variant } from "styled-system";
 
 interface StyleProps extends AllStylesProps {
   size?: "small" | "default" | "large";
+  variant?: "default" | "primary";
 }
 
 interface ButtonProps extends BaseProps, StyleProps, AriaProps, CursorProps {
@@ -24,6 +25,10 @@ const parser = compose(
   variant({
     prop: "size",
     scale: "buttonSizes",
+  }),
+  variant({
+    prop: "variant",
+    scale: "buttonVariants",
   })
 );
 
@@ -31,19 +36,17 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
   const { base, aria, cursor, rest } = extractAllAdjacentProps(props);
   const { href, disabled, children, ...styleProps } = rest;
 
-  const classNameForStyleProps = useStyledSystem<StyleProps>(
-    styleProps,
-    parser,
-    {
-      "&:not(:disabled)": {
-        cursor: "pointer",
-      },
-      "&:disabled": {
-        cursor: "not-allowed",
-        opacity: 0.8,
-      },
-    }
-  );
+  const propsStylesClassName = useStyledSystem<StyleProps>(styleProps, parser);
+
+  const baseStylesClassName = css({
+    "&:not(:disabled)": {
+      cursor: "pointer",
+    },
+    "&:disabled": {
+      cursor: "not-allowed",
+      opacity: 0.8,
+    },
+  });
 
   return (
     <button
@@ -51,7 +54,7 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
       {...cursor}
       {...base}
       disabled={disabled}
-      className={cx(classNameForStyleProps, base.className)}
+      className={cx(baseStylesClassName, propsStylesClassName, base.className)}
     >
       {children}
     </button>
@@ -59,12 +62,11 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
 };
 
 Button.defaultProps = {
-  border: "none",
   borderRadius: "default",
-  backgroundColor: "baseMedium",
   fontFamily: "default",
   fontWeight: "bold",
   size: "default",
+  variant: "default",
 };
 
 export default Button;

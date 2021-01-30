@@ -2,6 +2,7 @@ import {
   ThemeBordersType,
   ThemeBorderWidthsType,
   ThemeBreakpointsType,
+  ThemeButtonVariantType,
   ThemeColorsType,
   ThemeFontSizesType,
   ThemeFontsType,
@@ -12,7 +13,7 @@ import {
   ThemeType,
 } from "./types";
 
-const space: ThemeSpaceType = [0, 4, 8, 16, 32, 64, 128];
+const space: ThemeSpaceType = [0, 4, 8, 16, 32, 64, 128, 256];
 
 const breakpoints: ThemeBreakpointsType = ["40em", "52em", "64em"];
 
@@ -48,8 +49,8 @@ const borderWidths: ThemeBorderWidthsType = {
 
 const borders = (colors: ThemeColorsType): ThemeBordersType => ({
   none: "none",
-  default: `${borderWidths.default} solid ${colors.baseMedium}`,
-  thicc: `${borderWidths.thicc} solid ${colors.baseMedium}`,
+  default: `${borderWidths.default} solid ${colors.baseMediumHigh}`,
+  thicc: `${borderWidths.thicc} solid ${colors.baseMediumHigh}`,
 });
 
 const radii: ThemeRadiiType = {
@@ -80,6 +81,50 @@ const buttonSizes: ThemeSizeVariantType = {
   },
 };
 
+const textBoxSizes: ThemeSizeVariantType = {
+  small: {
+    height: 28,
+    fontSize: fontSizes[2],
+    paddingLeft: space[2],
+    paddingRight: space[2],
+  },
+  default: {
+    height: 32,
+    fontSize: fontSizes[3],
+    paddingLeft: space[2],
+    paddingRight: space[2],
+  },
+  large: {
+    height: 36,
+    fontSize: fontSizes[3],
+    paddingLeft: space[2],
+    paddingRight: space[2],
+  },
+};
+
+const buttonVariants = (colors: ThemeColorsType): ThemeButtonVariantType => ({
+  default: {
+    outline: "none",
+    border: "none",
+    backgroundColor: "transparent",
+    boxShadow: `inset 0 0 0 ${borderWidths.thicc} ${colors.accentMediumHigh}`,
+    color: colors.accentMediumHigh,
+    "&:hover": {
+      color: colors.accentLow,
+      boxShadow: `inset 0 0 0 ${borderWidths.thicc} ${colors.accentLow}`,
+    },
+  },
+  primary: {
+    outline: "none",
+    border: "none",
+    backgroundColor: colors.accentMediumHigh,
+    color: colors.accentText,
+    "&:hover": {
+      backgroundColor: colors.accentLow,
+    },
+  },
+});
+
 export const buildTheme = (colors: ThemeColorsType): ThemeType => ({
   colors,
   space,
@@ -91,4 +136,6 @@ export const buildTheme = (colors: ThemeColorsType): ThemeType => ({
   borders: borders(colors),
   radii,
   buttonSizes,
+  buttonVariants: buttonVariants(colors),
+  textBoxSizes,
 });
